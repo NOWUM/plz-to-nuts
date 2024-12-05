@@ -3,12 +3,12 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 import pgeocode
-from nuts_data import nuts_dict
+from .nuts_data import nuts_dict
 import re
+import argparse
 
 # Initialize the pgeocode library for Germany
 nomi = pgeocode.Nominatim('de')
-
 
 def replace_german_umlauts(text: str) -> str:
     """
@@ -36,6 +36,7 @@ def replace_german_umlauts(text: str) -> str:
     
     # Replace each matched umlaut with its corresponding replacement
     return pattern.sub(lambda match: umlaut_mapping[match.group(0)], text)
+
 def get_region_by_prefix(prefix) -> dict:
     """
     Finds the region based on the first digits of a postal code (prefix).
@@ -117,12 +118,34 @@ def get_nuts(region_dict: dict) -> str:
     # If no match is found, return "Not Found"
     return "Not Found"
 
-# Example usage
-if __name__ == "__main__":
-    # Example call for get_region_by_prefix
-    region = get_region_by_prefix('41366')
-    print(region)  # Example: {'place_name': 'Berlin', 'community_name': 'Berlin'}
+def plz2nuts_cli():
+    """
+    Command-line interface to convert German postal codes to NUTS IDs.
+    """
+    # Create an argument parser
+    parser = argparse.ArgumentParser(description='Convert German postal code to NUTS ID.')
+    parser.add_argument('postal_code', type=str, help='Postal code or prefix to lookup NUTS ID')
 
-    # Example call for get_nuts
+    # Parse the arguments
+    args = parser.parse_args()
+
+    # Get the postal code from the arguments
+    postal_code = args.postal_code
+
+    # Get the region dictionary using the postal code
+    region = get_region_by_prefix(postal_code)
+
+    if not region:
+        print("No region found for the given postal code.")
+        return
+
+    # Get the NUTS ID using the region dictionary
     nuts_id = get_nuts(region)
-    print(nuts_id)  # Example: DE300 if Berlin is in nuts_dict
+
+    if nuts_id == "Not Found":
+        print("No NUTS ID found for the given postal code.")
+    else:
+        print(nuts_id)
+
+if __name__ == "__main__":
+    plz2nuts_cli()
