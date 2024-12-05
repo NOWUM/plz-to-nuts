@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "plz-to-nuts"
+version = "0.1.0"
+description = "A Python package to convert German ZIP codes to NUTS IDs."
+readme = "README.md"
+license = {text = "AGPL-3.0-or-later"}
+authors = [{name = "Jonathan Sejdija", email = "sejdija@fh-aachen.de"}]
+dependencies = [
+    "pgeocode"
+]
+requires-python = ">=3.10"
