@@ -1,4 +1,4 @@
-name: Build
+name: Build and Publish
 
 on:
   push:
@@ -8,6 +8,10 @@ on:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      id-token: write
 
     steps:
       # Step 1: Check out the code
@@ -29,19 +33,15 @@ jobs:
       - name: Build package
         run: python -m build
 
-      # Step 5: Create GitHub Release
-      - name: Create GitHub Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref_name }}
-          release_name: ${{ github.ref_name }}
-          body: |
-            This is an automated release for version ${{ github.ref_name }}.
-          draft: false
-          prerelease: false
-
-      # Step 6: Publish to PyPI
+      # Step 5: Publish to PyPI using Trusted Publisher Workflow
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
+
+      # Step 6: Create GitHub Release using gh CLI
+      - name: Create GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create ${{ github.ref_name }} ./dist/* \
+            --title "Release ${{ github.ref_name }}" \
+            --notes "This is an automated release."
