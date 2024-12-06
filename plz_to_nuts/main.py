@@ -49,7 +49,11 @@ def get_region_by_prefix(prefix) -> dict:
         dict: A dictionary with 'place_name' and 'community_name'.
               If no matching postal codes are found, returns an empty dictionary.
     """
-    # Filter all postal codes that start with the given prefix
+    
+    if prefix == '':
+        return {}
+    
+    # Filter all postal codes that start with the given prefix    
     matching_postcodes = nomi._data_frame[nomi._data_frame['postal_code'].str.startswith(prefix)]
     
     # If no matching postal codes are found, return an empty dictionary
@@ -86,6 +90,11 @@ def get_nuts(region_dict: dict) -> str:
     Returns:
         str: The found NUTS ID. If no match is found, returns 'Not Found'.
     """
+    
+    # check if region dict is empty
+    if not region_dict:
+        return "Not Found"
+    
     # Extract place_name and community_name from the input dictionary
     place_name = region_dict.get('place_name', '')
     community_name = region_dict.get('community_name', '')
