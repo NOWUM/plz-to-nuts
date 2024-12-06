@@ -1,0 +1,30 @@
+name: Build
+
+on:
+  push:
+    tags:
+      - 'v*'  # Trigger workflow on version tags (e.g., v0.1.0)
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          pip install build twine setuptools-scm
+
+      # Step 4: Build the package
+      - name: Build package
+        run: python -m build

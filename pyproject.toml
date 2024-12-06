@@ -1,10 +1,16 @@
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools", "wheel", "setuptools_scm"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+version_scheme = "post-release"
+local_scheme = "dirty-tag"
+write_to = "plz_to_nuts/_version.py"
+write_to_template = "__version__ = '{version}'\n"
 
 [project]
 name = "plz-to-nuts"
-version = "0.1.0"
+dynamic = ["version"]
 authors = [
     { name = "Jonathan Sejdija", email = "sejdija@fh-aachen.de" }
 ]
