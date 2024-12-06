@@ -5,7 +5,7 @@ It takes 1-5 digits of the zip code as an input.
 ## Installation
 To install the tool, use the following command:
 ```
-pip install -e .
+pip install plz2nuts
 ```
 
 ## Usage
