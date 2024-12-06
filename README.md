@@ -1,5 +1,6 @@
 # Plz-To-NUTS
-This is a tool to convert parts or full German Postleitzahl to NUTS IDs.
+This is a tool to convert a German Postleitzahl (zip code) to the coresponding NUTS IDs.
+It takes 1-5 digits of the zip code as an input.
 
 ## Installation
 To install the tool, use the following command:
