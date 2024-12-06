@@ -9,7 +9,7 @@ write_to = "plz_to_nuts/_version.py"
 write_to_template = "__version__ = '{version}'\n"
 
 [project]
-name = "plz-to-nuts"
+name = "plz2nuts"
 dynamic = ["version"]
 authors = [
     { name = "Jonathan Sejdija", email = "sejdija@fh-aachen.de" }
