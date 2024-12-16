@@ -22,6 +22,12 @@ To use the tool, follow these steps:
    ```
    Replace `<postleitzahl>` with the actual Postleitzahl you want to convert.
 
+3. **Import in Python:** You can also import the tool in your Python code to get a NUTS ID for a plz:
+   ```python
+   from plz_to_nuts import convert_plz_to_nuts
+   convert_plz_to_nuts('10')
+   ```
+
 
 ## License
 This project is licensed under the AGPL-3.0-or-later license. See LICENSES/AGPL-3.0-or-later.txt for details.
