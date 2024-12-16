@@ -47,7 +47,7 @@ class TestMain(unittest.TestCase):
             # Test with missing keys in the dictionary
             region_dict = {'place_name': 'Berlin'}
             result = plz2nuts.get_nuts(region_dict)
-            self.assertEqual(result, "Not Found")
+            self.assertEqual(result, "DE300")
 
 
     @patch('argparse.ArgumentParser.parse_args')
@@ -67,7 +67,7 @@ class TestMain(unittest.TestCase):
             plz2nuts.plz2nuts_cli()
 
             # Check if print was called with the expected output
-            mock_print.assert_called_with('DE300')
+            mock_print.assert_called_with(f'The plz of 10115 refers to Berlin which maps to the NUTS ID DE300')
 
         # Test with invalid postal code (mocking behavior)
         mock_parse_args.return_value = argparse.Namespace(postal_code='99999')

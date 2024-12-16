@@ -112,7 +112,6 @@ def get_nuts(region_dict: dict) -> str:
     # replace umlaute with normal letters
     place_name = replace_german_umlauts(place_name)
     community_name = replace_german_umlauts(community_name)
-    print(community_name)
 
     # Check if place_name or part of it exists in nuts_dict
     for key, value in nuts_dict.items():
@@ -154,7 +153,21 @@ def plz2nuts_cli():
     if nuts_id == "Not Found":
         print("No NUTS ID found for the given postal code.")
     else:
-        print(nuts_id)
+        print(f'The plz of {postal_code} refers to {region["community_name"]} which maps to the NUTS ID {nuts_id}')
+        
+def convert_plz_to_nuts(plz: str) -> tuple[str, str]:
+    """
+    Converts a postal code to its corresponding NUTS ID.
+
+    Args:
+        plz (str): The postal code to convert.
+
+    Returns:
+        tuple[str, str]: A tuple containing the place and the NUTS ID.
+    """
+    region = get_region_by_prefix(plz)
+    nuts_id = get_nuts(region)
+    return region['community_name'], nuts_id
 
 if __name__ == "__main__":
     plz2nuts_cli()
